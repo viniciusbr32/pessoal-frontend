@@ -4,14 +4,14 @@ import { Input } from "../ui/input";
 
 export function Header() {
 	return (
-		<header className="w-full  py-8">
-			<div className="flex items-center justify-between max-w-[1080px] mx-auto px-2 ">
-				<div className="flex items-center gap-2">
+		<header className="w-full  py-8 ">
+			<div className="flex items-center justify-between container mx-auto px-2 ">
+				<div className="flex items-center gap-2 ">
 					<button
 						type="submit"
 						className="p-2 hover:bg-zinc-800 transition-all duration-200 cursor-pointer rounded-sm"
 					>
-						<Menu />
+						<Menu size={30} />
 					</button>
 
 					<h1 className="text-2xl font-bold">Conexões Infinitas</h1>
