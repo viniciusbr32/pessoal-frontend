@@ -1,6 +1,7 @@
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Link } from "react-router-dom";
 
 export function Header() {
 	return (
@@ -23,7 +24,7 @@ export function Header() {
 						className="bg-zinc-900 border-zinc-700 text-zinc-100 placeholder-zinc-500 "
 					/>
 					<Button className="px-6" variant={"secondary"}>
-						Entrar
+						<Link to="/login">Entrar</Link>
 					</Button>
 				</div>
 			</div>
