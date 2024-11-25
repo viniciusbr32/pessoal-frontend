@@ -1,27 +1,46 @@
 import { Badge } from "@/components/ui/badge";
 import bannerImage from "../../assets/placeholder.svg";
 import { Comments } from "../../components/layout/comment";
-import { post } from "@/constants/posts";
+
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { usePostsDetails } from "@/api/http/get-post-details";
+import { useParams } from "react-router-dom";
+import { FormatData } from "@/lib/date";
 
 export function PostDetails() {
+	const { id } = useParams<{ id: string }>();
+
+	const idString = String(id);
+
+	const { data } = usePostsDetails(idString);
+
+	if (!data) {
+		return;
+	}
+
 	return (
 		<>
 			<Header />
 			<main className="container px-4 py-8 mx-auto">
 				<article className="max-w-3xl mx-auto">
-					<h1 className="mb-4 text-4xl font-bold">
-						O Futuro da Inteligência Artificial
-					</h1>
+					<h1 className="mb-4 text-4xl font-bold">{data.title}</h1>
 					<div className="flex items-center mb-6 space-x-4">
 						<div>
 							<p className="text-sm font-medium text-zinc-200">Ana Silva</p>
-							<p className="text-sm text-zinc-400">25 Mar 2024</p>
+							<p className="text-sm text-zinc-400">
+								{FormatData(data.created_at)}
+							</p>
 						</div>
-						<Badge variant="secondary" className="bg-zinc-800 text-zinc-300">
-							Técnologia
-						</Badge>
+						{data.categories.map((category) => (
+							<Badge
+								key={category.category.id}
+								variant="secondary"
+								className="bg-zinc-800 text-zinc-300"
+							>
+								{category.category.name}
+							</Badge>
+						))}
 					</div>
 					<img
 						src={bannerImage}
@@ -31,7 +50,7 @@ export function PostDetails() {
 					<div
 						className="prose max-w-none"
 						// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-						dangerouslySetInnerHTML={{ __html: post.content }}
+						dangerouslySetInnerHTML={{ __html: data.content }}
 					/>
 				</article>
 

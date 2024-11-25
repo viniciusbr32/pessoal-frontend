@@ -15,7 +15,9 @@ export function Header() {
 						<Menu size={30} />
 					</button>
 
-					<h1 className="text-2xl font-bold">Conexões Infinitas</h1>
+					<Link to="/">
+						<h1 className="text-2xl font-bold">Conexões Infinitas</h1>
+					</Link>
 				</div>
 
 				<div className="flex gap-2 align-center">
@@ -23,7 +25,7 @@ export function Header() {
 						placeholder="Pesquisar"
 						className="bg-zinc-900 border-zinc-700 text-zinc-100 placeholder-zinc-500 "
 					/>
-					<Button className="px-6" variant={"secondary"}>
+					<Button asChild className="px-6" variant={"secondary"}>
 						<Link to="/login">Entrar</Link>
 					</Button>
 				</div>
