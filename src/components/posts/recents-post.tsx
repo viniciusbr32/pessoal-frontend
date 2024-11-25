@@ -13,16 +13,16 @@ import { Badge } from "../ui/badge";
 
 export function RecentPost() {
 	return (
-		<Card className="bg-zinc-900 border-zinc-800 overflow-hidden">
+		<Card className="overflow-hidden bg-zinc-900 border-zinc-800">
 			<div className="flex flex-col md:flex-row">
 				<img
 					src={bannerImg}
 					alt="banner"
-					className="w-full md:w-1/3 h-48 md:h-auto object-cover"
+					className="object-cover w-full h-48 md:w-1/3 md:h-auto"
 				/>
 				<div className="flex-1">
 					<CardHeader>
-						<div className="flex justify-between items-start">
+						<div className="flex items-start justify-between">
 							<div>
 								<CardTitle className="text-zinc-100">
 									Como Iniciar uma Startup de Sucesso
@@ -31,7 +31,9 @@ export function RecentPost() {
 									Negócios
 								</CardDescription>
 							</div>
-							<Badge className="bg-zinc-800 text-zinc-300">Negócios</Badge>
+							<Badge className="bg-zinc-800 text-zinc-300 hover:bg-zinc-700">
+								Negócios
+							</Badge>
 						</div>
 					</CardHeader>
 					<CardContent>
@@ -47,7 +49,7 @@ export function RecentPost() {
 							variant="link"
 							className="text-zinc-400 hover:text-zinc-100"
 						>
-							Ler mais <ChevronRightIcon className="ml-2 h-4 w-4" />
+							Ler mais <ChevronRightIcon className="w-4 h-4 ml-2" />
 						</Button>
 					</CardFooter>
 				</div>

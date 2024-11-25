@@ -27,7 +27,9 @@ export function PostDetails() {
 					<h1 className="mb-4 text-4xl font-bold">{data.title}</h1>
 					<div className="flex items-center mb-6 space-x-4">
 						<div>
-							<p className="text-sm font-medium text-zinc-200">Ana Silva</p>
+							<p className="text-sm font-medium text-zinc-200">
+								{data.user.name}
+							</p>
 							<p className="text-sm text-zinc-400">
 								{FormatData(data.created_at)}
 							</p>

@@ -31,6 +31,7 @@ export function PostCard({ data }: DataProps) {
 				/>
 				<CardHeader>
 					<CardTitle className="truncate">{data.title}</CardTitle>
+
 					<div className="flex items-center gap-3">
 						{data.categories.map((category) => (
 							<CardDescription key={category.category.id}>
@@ -40,7 +41,9 @@ export function PostCard({ data }: DataProps) {
 					</div>
 				</CardHeader>
 				<CardContent>
-					<p>{FormatData(data.created_at)}</p>
+					<p>
+						{data.user.name} • {FormatData(data.created_at)}
+					</p>
 				</CardContent>
 				<CardFooter>
 					<Button

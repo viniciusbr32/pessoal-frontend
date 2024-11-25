@@ -17,6 +17,9 @@ export interface Post {
 	update_at: string;
 	userId: string;
 	categories: Category[];
+	user: {
+		name: string;
+	};
 }
 
 export async function fetchPosts(): Promise<Post[]> {
