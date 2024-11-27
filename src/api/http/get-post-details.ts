@@ -20,6 +20,15 @@ export interface Post {
 	user: {
 		name: string;
 	};
+	comments: Comment[];
+}
+
+export interface Comment {
+	content: string;
+	created_at: string;
+	user: {
+		name: string;
+	};
 }
 
 export async function fetchPostsDetails(id: string): Promise<Post> {

@@ -59,8 +59,23 @@ export function PostDetails() {
 				<div className="my-8 bg-zinc-800" />
 				<section className="max-w-3xl mx-auto space-y-3">
 					<h2 className="mb-4 text-2xl font-bold">Comentários</h2>
-					<Comments />
-					<Comments />
+
+					{data.comments && data.comments.length > 0 ? (
+						data.comments.map((comment, index) => (
+							<Comments
+								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+								key={index}
+								user={comment.user.name}
+								content={comment.content}
+								date={comment.created_at}
+							/>
+						))
+					) : (
+						<p className="text-sm capitalize text-zinc-400">
+							Este post ainda está sem comentários. 📝 Seja você o primeiro a
+							comentar!
+						</p>
+					)}
 				</section>
 			</main>
 			<Footer />
