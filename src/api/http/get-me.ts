@@ -3,6 +3,7 @@ import { api } from "../api";
 
 interface MeProps {
 	name: string;
+	id: string;
 }
 
 export async function fetchPostsDetails(token: string): Promise<MeProps> {

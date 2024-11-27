@@ -22,6 +22,10 @@ export function PostDetails() {
 
 	const { data: userDetails } = useUserDetails(token);
 
+	if (!userDetails) {
+		return;
+	}
+
 	if (!data) {
 		return;
 	}
@@ -88,9 +92,9 @@ export function PostDetails() {
 					<h3 className="mb-4 text-xl font-bold">Deixe um comentário</h3>
 					{token && (
 						<FormComment
-							name={userDetails?.name}
+							name={userDetails.name}
 							post_id={data.id}
-							user_id={data.userId}
+							user_id={userDetails.id}
 						/>
 					)}
 					{!token && (

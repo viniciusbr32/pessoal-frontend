@@ -31,7 +31,7 @@ export function Header() {
 
 	return (
 		<header className="w-full py-8 ">
-			<div className="container flex items-center justify-between px-2 mx-auto ">
+			<div className="container flex items-center justify-between mx-auto ">
 				<div className="flex items-center gap-2 ">
 					<button
 						type="submit"
@@ -52,8 +52,8 @@ export function Header() {
 					/>
 
 					{data && (
-						<div className="flex items-center w-full gap-2">
-							<span className="text-sm text-zinc-400">Olá, {data.name}</span>
+						<div className="flex items-center w-full gap-2 ">
+							<span className="text-sm text-zinc-400 ">Olá, {data.name}</span>
 							<div className="relative">
 								<DropMenu
 									onOpen={closeMenu}
