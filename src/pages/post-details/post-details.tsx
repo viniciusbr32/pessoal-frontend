@@ -5,8 +5,11 @@ import { Comments } from "../../components/layout/comment";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { usePostsDetails } from "@/api/http/get-post-details";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FormatData } from "@/lib/date";
+import { FormComment } from "@/components/layout/form-comment";
+import { useUserDetails } from "@/api/http/get-me";
+import { Button } from "@/components/ui/button";
 
 export function PostDetails() {
 	const { id } = useParams<{ id: string }>();
@@ -14,6 +17,10 @@ export function PostDetails() {
 	const idString = String(id);
 
 	const { data } = usePostsDetails(idString);
+
+	const token = localStorage.getItem("authToken") as string;
+
+	const { data: userDetails } = useUserDetails(token);
 
 	if (!data) {
 		return;
@@ -61,10 +68,9 @@ export function PostDetails() {
 					<h2 className="mb-4 text-2xl font-bold">Comentários</h2>
 
 					{data.comments && data.comments.length > 0 ? (
-						data.comments.map((comment, index) => (
+						data.comments.map((comment) => (
 							<Comments
-								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-								key={index}
+								key={comment.id}
 								user={comment.user.name}
 								content={comment.content}
 								date={comment.created_at}
@@ -75,6 +81,27 @@ export function PostDetails() {
 							Este post ainda está sem comentários. 📝 Seja você o primeiro a
 							comentar!
 						</p>
+					)}
+				</section>
+
+				<section className="max-w-3xl mx-auto my-8">
+					<h3 className="mb-4 text-xl font-bold">Deixe um comentário</h3>
+					{token && (
+						<FormComment
+							name={userDetails?.name}
+							post_id={data.id}
+							user_id={data.userId}
+						/>
+					)}
+					{!token && (
+						<div className="space-y-2">
+							<p className="text-sm text-zinc-400">
+								Você precisa estar logado para fazer um comentario
+							</p>
+							<Button asChild variant="secondary">
+								<Link to="/login">Fazer login</Link>
+							</Button>
+						</div>
 					)}
 				</section>
 			</main>
