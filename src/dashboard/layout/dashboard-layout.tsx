@@ -1,11 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
-	BarChartIcon,
 	FileTextIcon,
 	LogOutIcon,
 	PlusCircleIcon,
-	SettingsIcon,
 	TagIcon,
 	UserIcon,
 } from "lucide-react";
@@ -19,8 +17,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 		{ icon: FileTextIcon, label: "Posts", href: "/dashboard/posts" },
 		{ icon: PlusCircleIcon, label: "Novo Post", href: "/dashboard/new-post" },
 		{ icon: TagIcon, label: "Categorias", href: "/dashboard/categories" },
-		{ icon: BarChartIcon, label: "Métricas", href: "/dashboard/metrics" },
-		{ icon: SettingsIcon, label: "Configurações", href: "/dashboard/settings" },
+		// { icon: BarChartIcon, label: "Métricas", href: "/dashboard/metrics" },
+		// { icon: SettingsIcon, label: "Configurações", href: "/dashboard/settings" },
 	];
 
 	return (
