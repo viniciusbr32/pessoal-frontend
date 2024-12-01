@@ -59,6 +59,7 @@ export function Header() {
 									onOpen={closeMenu}
 									isOpen={isMenuOpen}
 									logout={userLogout}
+									role={data.role}
 								>
 									<Avatar>
 										<AvatarImage

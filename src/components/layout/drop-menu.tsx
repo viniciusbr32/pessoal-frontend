@@ -8,15 +8,23 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 interface DropMenuPRops {
 	isOpen: boolean;
 	onOpen: (open: boolean) => void;
 	logout: () => void;
 	children: ReactNode;
+	role: string;
 }
 
-export function DropMenu({ isOpen, onOpen, children, logout }: DropMenuPRops) {
+export function DropMenu({
+	isOpen,
+	onOpen,
+	children,
+	logout,
+	role,
+}: DropMenuPRops) {
 	return (
 		<DropdownMenu onOpenChange={onOpen} open={isOpen} modal={false}>
 			<DropdownMenuTrigger>{children}</DropdownMenuTrigger>
@@ -26,6 +34,11 @@ export function DropMenu({ isOpen, onOpen, children, logout }: DropMenuPRops) {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>Config</DropdownMenuItem>
 				<DropdownMenuItem>Favoritos</DropdownMenuItem>
+				{role === "admin" && (
+					<Link to="/dashboard">
+						<DropdownMenuItem>Dashboard</DropdownMenuItem>
+					</Link>
+				)}
 				<DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
