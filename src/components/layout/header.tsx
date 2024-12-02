@@ -3,18 +3,19 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useUserDetails } from "@/api/http/get-me";
+// import { useUserDetails } from "@/api/http/get-me";
 
 import { DropMenu } from "./drop-menu";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useBlogAuth } from "@/context/providers/BlogAuthProvider";
 
 export function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const token = localStorage.getItem("authToken") as string;
+
 	const navigate = useNavigate();
 
-	const { data } = useUserDetails(token);
+	const { userDetails, logout } = useBlogAuth();
 
 	const myToggleMenu = () => {
 		setIsMenuOpen(true);
@@ -25,7 +26,7 @@ export function Header() {
 	};
 
 	const userLogout = () => {
-		localStorage.removeItem("authToken");
+		logout();
 		navigate("/login");
 	};
 
@@ -51,15 +52,17 @@ export function Header() {
 						className="bg-zinc-900 border-zinc-700 text-zinc-100 placeholder-zinc-500 "
 					/>
 
-					{data && (
+					{userDetails && (
 						<div className="flex items-center w-full gap-2 ">
-							<span className="text-sm text-zinc-400 ">Olá, {data.name}</span>
+							<span className="text-sm capitalize text-zinc-400">
+								{userDetails?.name}
+							</span>
 							<div className="relative">
 								<DropMenu
 									onOpen={closeMenu}
 									isOpen={isMenuOpen}
 									logout={userLogout}
-									role={data.role}
+									role={userDetails?.role}
 								>
 									<Avatar>
 										<AvatarImage
@@ -76,7 +79,7 @@ export function Header() {
 						</div>
 					)}
 
-					{!data && (
+					{!userDetails && (
 						<Button asChild className="px-6" variant={"secondary"}>
 							<Link to="/login">Entrar</Link>
 						</Button>

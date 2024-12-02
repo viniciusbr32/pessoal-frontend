@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { useBlogAuth } from "@/context/providers/BlogAuthProvider";
 import {
 	FileTextIcon,
 	LogOutIcon,
@@ -7,10 +8,14 @@ import {
 	TagIcon,
 	UserIcon,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
+	const navigate = useNavigate();
 	const { pathname } = useLocation();
+
+	const { userDetails, logout } = useBlogAuth();
 
 	const menuItems = [
 		{ icon: UserIcon, label: "Dashboard", href: "/dashboard" },
@@ -21,6 +26,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 		// { icon: SettingsIcon, label: "Configurações", href: "/dashboard/settings" },
 	];
 
+	const handleLogoutUser = () => {
+		logout();
+		navigate("/login");
+	};
+
 	return (
 		<div className="flex h-screen bg-zinc-950 text-zinc-100">
 			<aside className="w-64 p-4 border-r bg-zinc-900 border-zinc-800">
@@ -30,8 +40,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 						<AvatarFallback>CN</AvatarFallback>
 					</Avatar>
 					<div>
-						<p className="font-semibold">Carlos Nunes</p>
-						<p className="text-xs text-zinc-400">Editor Chefe</p>
+						<p className="font-semibold">{userDetails?.name}</p>
+						<p className="text-xs text-zinc-400">{userDetails?.role}</p>
 					</div>
 				</div>
 				<nav className="space-y-2">
@@ -53,6 +63,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 				</nav>
 				<div className="pt-4 mt-auto">
 					<Button
+						onClick={handleLogoutUser}
 						variant="ghost"
 						className="justify-start w-full text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
 					>

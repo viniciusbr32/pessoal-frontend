@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useLoginUser } from "@/hooks/useLoginUser";
-import { Link, useNavigate } from "react-router-dom";
+import { useBlogAuth } from "@/context/providers/BlogAuthProvider";
+
+import { Link } from "react-router-dom";
 
 export function SignIn() {
-	const mutation = useLoginUser("/session");
-	const navigate = useNavigate();
+	const { login } = useBlogAuth();
 
 	const handleSubmitLoginUser = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -27,11 +27,7 @@ export function SignIn() {
 			return;
 		}
 
-		mutation.mutate({ email, password });
-
-		if (mutation.isSuccess) {
-			navigate("/");
-		}
+		login({ email, password });
 	};
 
 	return (
