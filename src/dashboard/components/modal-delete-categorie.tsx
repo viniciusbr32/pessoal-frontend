@@ -9,13 +9,19 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 
-interface ModalCountProps {
-	count: number;
+interface ModalDeletProps {
 	open: boolean;
 	onOpenChange: () => void;
+	id: string;
+	removeCategorie: (id: string) => void;
 }
 
-export function ModalCount({ count, open, onOpenChange }: ModalCountProps) {
+export function ModalDeleteCategorie({
+	open,
+	onOpenChange,
+	id,
+	removeCategorie,
+}: ModalDeletProps) {
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogOverlay className="fixed inset-0 z-50 shadow-none bg-none" />
@@ -23,12 +29,12 @@ export function ModalCount({ count, open, onOpenChange }: ModalCountProps) {
 				<DialogHeader>
 					<DialogTitle>Deletar Categoria</DialogTitle>
 					<DialogDescription>
-						Essa Categoria está atrelado a {count} posts, Não pode ser removida
+						Tem Certeza que deseja remover ? Essa ação não pode ser desfeita
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>
-					<Button type="submit" onClick={onOpenChange}>
-						Fechar
+					<Button type="submit" onClick={() => removeCategorie(id)}>
+						Deletar Categoria
 					</Button>
 				</DialogFooter>
 			</DialogContent>

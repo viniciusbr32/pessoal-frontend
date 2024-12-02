@@ -6,22 +6,25 @@ import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { DashboardLayout } from "../layout/dashboard-layout";
 import { useCategories } from "@/api/http/get-categories";
 import { useCreateCategorie } from "@/hooks/useCreateCategorie";
+
+import { Badge } from "@/components/ui/badge";
+import { ModalCount } from "../components/modal-count-delete";
+import { useState } from "react";
+import { ModalDeleteCategorie } from "../components/modal-delete-categorie";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteCategorie } from "@/hooks/useDeleteCategorie";
-import { Badge } from "@/components/ui/badge";
-import { ModalCountDelete } from "../components/modal-count-delete";
-import { useState } from "react";
 
 export function Categories() {
 	const [open, setOpen] = useState(false);
+	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [selectCategoryCount, setSelectedCategoryCount] = useState(0);
+	const [idCategoria, setIdCategoria] = useState("");
 
-	const queryClient = useQueryClient();
 	const mutation = useCreateCategorie();
-	const { mutate: deleteCategorie } = useDeleteCategorie();
 
 	const token = localStorage.getItem("authToken") as string;
 	const { data } = useCategories(token);
+	const queryClient = useQueryClient();
 
 	const handleCreateCategorie = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -43,14 +46,6 @@ export function Categories() {
 		);
 	};
 
-	const DeleteCategorie = (id: string) => {
-		deleteCategorie(id, {
-			onSuccess: () => {
-				queryClient.invalidateQueries();
-			},
-		});
-	};
-
 	const handleDeleteClick = (category: {
 		id: string;
 		_count: { posts: number };
@@ -58,9 +53,21 @@ export function Categories() {
 		if (category._count.posts >= 1) {
 			setSelectedCategoryCount(category._count.posts);
 			setOpen(true);
-		} else {
-			DeleteCategorie(category.id);
+			return;
 		}
+		setOpenModalDelete(true);
+		setIdCategoria(category.id);
+	};
+
+	const { mutate: deleteCategorie } = useDeleteCategorie();
+
+	const DeleteCategorie = (id: string) => {
+		deleteCategorie(id, {
+			onSuccess: () => {
+				queryClient.invalidateQueries();
+				setOpenModalDelete(false);
+			},
+		});
 	};
 	return (
 		<DashboardLayout>
@@ -117,10 +124,17 @@ export function Categories() {
 					))}
 				</div>
 			</div>
-			<ModalCountDelete
+			<ModalCount
 				open={open}
 				onOpenChange={() => setOpen(false)}
 				count={selectCategoryCount}
+			/>
+
+			<ModalDeleteCategorie
+				open={openModalDelete}
+				onOpenChange={() => setOpenModalDelete(false)}
+				id={idCategoria}
+				removeCategorie={DeleteCategorie}
 			/>
 		</DashboardLayout>
 	);

@@ -20,7 +20,6 @@ export function useLoginUser(endpoint: string) {
 				return response.data;
 			} catch (error: unknown) {
 				if (axios.isAxiosError(error)) {
-					console.log("Erro ao logar usuario", error.response?.data.error);
 					throw new Error(error.response?.data.error);
 				}
 				throw new Error("Erro desconhecido");
