@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useBlogAuth } from "@/context/providers/BlogAuthProvider";
 import {
+	BarChartIcon,
 	FileTextIcon,
 	LogOutIcon,
 	PlusCircleIcon,
@@ -22,7 +23,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 		{ icon: FileTextIcon, label: "Posts", href: "/dashboard/posts" },
 		{ icon: PlusCircleIcon, label: "Novo Post", href: "/dashboard/new-post" },
 		{ icon: TagIcon, label: "Categorias", href: "/dashboard/categories" },
-		// { icon: BarChartIcon, label: "Métricas", href: "/dashboard/metrics" },
+		{ icon: BarChartIcon, label: "Modal", href: "/dashboard/modal" },
 		// { icon: SettingsIcon, label: "Configurações", href: "/dashboard/settings" },
 	];
 

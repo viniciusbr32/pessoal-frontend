@@ -6,21 +6,28 @@ import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { DashboardLayout } from "../layout/dashboard-layout";
 import { useCategories } from "@/api/http/get-categories";
 import { useCreateCategorie } from "@/hooks/useCreateCategorie";
-
 import { Badge } from "@/components/ui/badge";
-import { ModalCount } from "../components/modal-count-delete";
+
 import { useState } from "react";
-import { ModalDeleteCategorie } from "../components/modal-delete-categorie";
+
 import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteCategorie } from "@/hooks/useDeleteCategorie";
+import { Modal } from "../components/modal";
+import { useEditCategorie } from "@/hooks/useEditCategorie";
+
+interface ModalType {
+	type: "edit" | "delete" | "warning";
+}
 
 export function Categories() {
 	const [open, setOpen] = useState(false);
-	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [selectCategoryCount, setSelectedCategoryCount] = useState(0);
-	const [idCategoria, setIdCategoria] = useState("");
+	const [modalType, setModalType] = useState<ModalType["type"]>("edit");
+	const [selectedCategory, setSelectedCategory] = useState<string>("");
+	const [inputValue, setInputValue] = useState<string>("");
 
 	const mutation = useCreateCategorie();
+	const { mutate: EditCategorie } = useEditCategorie(selectedCategory);
 
 	const token = localStorage.getItem("authToken") as string;
 	const { data } = useCategories(token);
@@ -52,22 +59,43 @@ export function Categories() {
 	}) => {
 		if (category._count.posts >= 1) {
 			setSelectedCategoryCount(category._count.posts);
+			setModalType("warning");
 			setOpen(true);
 			return;
 		}
-		setOpenModalDelete(true);
-		setIdCategoria(category.id);
+		setModalType("delete");
+		setSelectedCategory(category.id);
+		setOpen(true);
 	};
 
 	const { mutate: deleteCategorie } = useDeleteCategorie();
 
-	const DeleteCategorie = (id: string) => {
-		deleteCategorie(id, {
-			onSuccess: () => {
-				queryClient.invalidateQueries();
-				setOpenModalDelete(false);
-			},
-		});
+	const handleConfirm = () => {
+		if (modalType === "delete" && selectedCategory) {
+			deleteCategorie(selectedCategory, {
+				onSuccess: () => {
+					queryClient.invalidateQueries();
+					setOpen(false);
+				},
+			});
+		}
+		if (modalType === "edit" && selectedCategory) {
+			EditCategorie(
+				{ name: inputValue },
+				{
+					onSuccess: () => {
+						queryClient.invalidateQueries();
+						setOpen(false);
+					},
+				},
+			);
+		}
+	};
+
+	const handleEditCategorie = (id: string) => {
+		setSelectedCategory(id);
+		setModalType("edit");
+		setOpen(true);
 	};
 	return (
 		<DashboardLayout>
@@ -108,6 +136,7 @@ export function Categories() {
 									variant="ghost"
 									size="sm"
 									className="text-zinc-400 hover:text-zinc-100"
+									onClick={() => handleEditCategorie(category.id)}
 								>
 									<Edit2Icon className="w-4 h-4" />
 								</Button>
@@ -124,17 +153,14 @@ export function Categories() {
 					))}
 				</div>
 			</div>
-			<ModalCount
+			<Modal
+				type={modalType}
 				open={open}
-				onOpenChange={() => setOpen(false)}
 				count={selectCategoryCount}
-			/>
-
-			<ModalDeleteCategorie
-				open={openModalDelete}
-				onOpenChange={() => setOpenModalDelete(false)}
-				id={idCategoria}
-				removeCategorie={DeleteCategorie}
+				onOpenChange={() => setOpen(false)}
+				onConfirm={handleConfirm}
+				inputValue={inputValue}
+				onInputChange={setInputValue}
 			/>
 		</DashboardLayout>
 	);
