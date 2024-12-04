@@ -14,6 +14,8 @@ export function Posts() {
 					{posts?.map((post) => (
 						<PostCard data={post} key={post.id} />
 					))}
+
+					{posts?.length === 0 && <p>Não existe postagens em destaque</p>}
 				</div>
 
 				<h2 className="mb-6 text-3xl font-bold">Posts Recentes</h2>

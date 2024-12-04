@@ -11,6 +11,8 @@ import { PageDashboard } from "./dashboard/page";
 import { Categories } from "./dashboard/categories/categories";
 import { BlogAuthProvider } from "./context/providers/BlogAuthProvider";
 
+import { PostsAdmin } from "./dashboard/posts/posts-admin";
+
 export function App() {
 	return (
 		<Router>
@@ -23,6 +25,7 @@ export function App() {
 					<Route path="/dashboard" element={<PageDashboard />} />
 					<Route path="/dashboard/new-post" element={<CreatePost />} />
 					<Route path="/dashboard/categories" element={<Categories />} />
+					<Route path="/dashboard/posts" element={<PostsAdmin />} />
 				</Routes>
 			</BlogAuthProvider>
 		</Router>

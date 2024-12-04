@@ -69,7 +69,7 @@ export function Modal({
 					<Button
 						type="submit"
 						onClick={type === "warning" ? onOpenChange : onConfirm}
-						variant="secondary"
+						variant={type === "delete" ? "destructive" : "secondary"}
 					>
 						{buttonTitle[type] || null}
 					</Button>
