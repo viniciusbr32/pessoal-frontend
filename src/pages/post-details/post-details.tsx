@@ -71,6 +71,7 @@ export function PostDetails() {
 						data.comments.map((comment) => (
 							<Comments
 								key={comment.id}
+								id={comment.id}
 								user={comment.user.name}
 								content={comment.content}
 								date={comment.created_at}
