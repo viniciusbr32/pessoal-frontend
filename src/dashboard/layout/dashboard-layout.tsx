@@ -5,6 +5,7 @@ import {
 	FileTextIcon,
 	LogOutIcon,
 	PlusCircleIcon,
+	Podcast,
 	TagIcon,
 	UserIcon,
 } from "lucide-react";
@@ -22,8 +23,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 		{ icon: FileTextIcon, label: "Posts", href: "/dashboard/posts" },
 		{ icon: PlusCircleIcon, label: "Novo Post", href: "/dashboard/new-post" },
 		{ icon: TagIcon, label: "Categorias", href: "/dashboard/categories" },
-		// { icon: BarChartIcon, label: "Métricas", href: "/dashboard/metrics" },
-		// { icon: SettingsIcon, label: "Configurações", href: "/dashboard/settings" },
+		{ icon: Podcast, label: "Blog", href: "/" },
 	];
 
 	const handleLogoutUser = () => {

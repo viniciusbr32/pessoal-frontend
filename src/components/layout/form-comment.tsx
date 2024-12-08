@@ -4,11 +4,12 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface CommentProps {
 	name: string | undefined;
 	post_id: string;
-	user_id: string;
+	user_id: string | undefined;
 }
 
 export function FormComment({ name, post_id, user_id }: CommentProps) {
@@ -21,6 +22,11 @@ export function FormComment({ name, post_id, user_id }: CommentProps) {
 		event.preventDefault();
 
 		if (!content) {
+			return;
+		}
+
+		if (!user_id) {
+			toast.error("Não é possivel enviar um comentnario, faça o login");
 			return;
 		}
 
@@ -39,9 +45,9 @@ export function FormComment({ name, post_id, user_id }: CommentProps) {
 		<form onSubmit={handleCreateComment} className="space-y-4">
 			<Input
 				value={name}
-				disabled
 				placeholder={name}
-				className="bg-zinc-900 border-zinc-700 text-zinc-100 placeholder-zinc-500"
+				disabled
+				className="capitalize bg-zinc-900 border-zinc-700 text-zinc-100 placeholder-zinc-500"
 			/>
 			<Textarea
 				placeholder="Seu comentário"

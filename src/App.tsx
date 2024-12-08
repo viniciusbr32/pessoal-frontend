@@ -12,6 +12,7 @@ import { Categories } from "./dashboard/categories/categories";
 import { BlogAuthProvider } from "./context/providers/BlogAuthProvider";
 
 import { PostsAdmin } from "./dashboard/posts/posts-admin";
+import { ProtectedRoute } from "./routes/protected";
 
 export function App() {
 	return (
@@ -22,10 +23,39 @@ export function App() {
 					<Route path="/details/:id" element={<PostDetails />} />
 					<Route path="/login" element={<SignIn />} />
 					<Route path="/register" element={<SignUp />} />
-					<Route path="/dashboard" element={<PageDashboard />} />
-					<Route path="/dashboard/new-post" element={<CreatePost />} />
-					<Route path="/dashboard/categories" element={<Categories />} />
-					<Route path="/dashboard/posts" element={<PostsAdmin />} />
+
+					<Route
+						path="/dashboard"
+						element={
+							<ProtectedRoute>
+								<PageDashboard />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/dashboard/new-post"
+						element={
+							<ProtectedRoute>
+								<CreatePost />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/dashboard/categories"
+						element={
+							<ProtectedRoute>
+								<Categories />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/dashboard/posts"
+						element={
+							<ProtectedRoute>
+								<PostsAdmin />
+							</ProtectedRoute>
+						}
+					/>
 				</Routes>
 			</BlogAuthProvider>
 		</Router>
