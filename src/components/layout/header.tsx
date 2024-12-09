@@ -1,9 +1,6 @@
-import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Link, useNavigate } from "react-router-dom";
-
-// import { useUserDetails } from "@/api/http/get-me";
 
 import { DropMenu } from "./drop-menu";
 import { useState } from "react";
@@ -32,17 +29,12 @@ export function Header() {
 
 	return (
 		<header className="w-full py-8 ">
-			<div className="container flex items-center justify-between mx-auto ">
+			<div className="container flex items-center justify-between mx-auto p-2">
 				<div className="flex items-center gap-2 ">
-					<button
-						type="submit"
-						className="p-2 transition-all duration-200 rounded-sm cursor-pointer hover:bg-zinc-800"
-					>
-						<Menu size={30} />
-					</button>
-
 					<Link to="/">
-						<h1 className="text-2xl font-bold">Conexões Infinitas</h1>
+						<h1 className="md:text-2xl capitalize font-bold">
+							Conexões Infinitas
+						</h1>
 					</Link>
 				</div>
 
